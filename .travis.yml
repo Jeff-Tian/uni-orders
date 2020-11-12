@@ -1,0 +1,44 @@
+language: node_js
+node_js:
+  - 11.10.0
+services:
+  - docker
+install:
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
+  - mkdir ${HOME}/.kube
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - npm i
+  - npm i -g k8ss
+  - echo -e "machine github.com\n  login $GH_TOKEN" > ~/.netrc
+  - git clone https://github.com/Jeff-Tian/k8s-config.git ${HOME}/k8s-config
+cache:
+  directories:
+    - node_modules
+env:
+  ci: true
+before_install:
+  - echo "hello"
+before_script:
+  - echo "before script..."
+script:
+  - npm test
+  - npm run test:e2e
+  - npm run build
+  - docker build -t "$DOCKER_USERNAME"/uni-orders .
+  - docker images
+  - docker run -d -p 127.0.0.1:3000:3000 --name uni-orders "$DOCKER_USERNAME"/uni-orders
+  - docker ps | grep -q uni-orders
+  - docker ps -aqf "name=uni-orders$"
+  - docker push "$DOCKER_USERNAME"/uni-orders
+  - docker logs $(docker ps -aqf name=uni-orders$)
+  - curl localhost:3000 || docker logs $(docker ps -aqf name=uni-orders$)
+  - docker kill uni-orders || echo "uni-orders killed"
+  - docker rm uni-orders || echo "uni-orders removed"
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: npm run okteto
+    on:
+      branch: main
