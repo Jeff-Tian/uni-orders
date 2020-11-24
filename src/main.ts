@@ -18,6 +18,7 @@ async function bootstrap() {
     extendedGrpcOptions(grpcClientOptions as GrpcOptions),
   );
 
+  await app.startAllMicroservicesAsync();
   await app.listen(3000, '0.0.0.0');
 }
 
