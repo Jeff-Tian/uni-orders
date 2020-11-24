@@ -30,7 +30,7 @@ spec:
       containers:
         - image: jefftian/uni-orders
           imagePullPolicy: Always
-          name: uni-proto
+          name: uni-orders
           env:
             - name: GET_HOSTS_FROM
               value: dns
