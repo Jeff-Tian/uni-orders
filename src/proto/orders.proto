@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package uni;
+
+service OrdersService {
+  rpc list(OrdersReq) returns (OrdersRes) {}
+}
+
+message OrdersReq {
+
+}
+
+message OrdersRes {
+
+}

@@ -30,7 +30,7 @@ spec:
       containers:
         - image: jefftian/uni-orders
           imagePullPolicy: Always
-          name: uni-orders
+          name: uni-proto
           env:
             - name: GET_HOSTS_FROM
               value: dns
@@ -41,6 +41,14 @@ spec:
             - containerPort: 5005
               name: grpc
               protocol: TCP
+          readinessProbe:
+            exec:
+              command: ["/bin/grpc_health_probe", "-addr=:5005"]
+            initialDelaySeconds: 5
+          livenessProbe:
+            exec:
+              command: ["/bin/grpc_health_probe", "-addr=:5005"]
+            initialDelaySeconds: 10
           resources:
             limits:
               cpu: 500m
