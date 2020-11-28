@@ -5,13 +5,16 @@ import { HealthModule } from 'grpc-health/dist/health/health.module';
 import { grpcClientOptions } from './grpc-client.options';
 import { GrpcOptions } from '@nestjs/microservices';
 import { OrdersModule } from './orders/orders.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { HealthController } from './health/health.controller';
 
 @Module({
   imports: [
     HealthModule.register(grpcClientOptions as GrpcOptions),
     OrdersModule,
+    TerminusModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, HealthController],
   providers: [AppService],
 })
 export class AppModule {}

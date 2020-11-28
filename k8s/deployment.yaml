@@ -45,10 +45,20 @@ spec:
             exec:
               command: ["/bin/grpc_health_probe", "-addr=:5005"]
             initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 30
+            httpGet:
+              port: 3000
+              path: /health
           livenessProbe:
             exec:
               command: ["/bin/grpc_health_probe", "-addr=:5005"]
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 30
+            httpGet:
+              port: 3000
+              path: /
           resources:
             limits:
               cpu: 500m
