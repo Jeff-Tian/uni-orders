@@ -1,24 +1,17 @@
-import { Controller, OnModuleInit } from '@nestjs/common';
-import { grpcClientOptions } from '../grpc-client.options';
-import { Client, ClientGrpc, GrpcMethod } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
+import { Controller, Get, Inject } from '@nestjs/common';
+import { GrpcMethod } from '@nestjs/microservices';
+import { IOrdersService } from './IOrdersService';
+import { symbols } from '../constants';
 
-interface OrdersService {
-  list(): Observable<any>;
-}
-
-@Controller()
-export class OrdersController implements OnModuleInit {
-  @Client(grpcClientOptions)
-  private readonly client: ClientGrpc;
-  private ordersService: OrdersService;
-
-  onModuleInit(): any {
-    this.ordersService = this.client.getService('OrdersService');
-  }
+@Controller('orders')
+export class OrdersController {
+  constructor(
+    @Inject(symbols.IOrdersService) private ordersService: IOrdersService,
+  ) {}
 
   @GrpcMethod('OrdersService')
+  @Get()
   list() {
-    return {};
+    return this.ordersService.findAll();
   }
 }
