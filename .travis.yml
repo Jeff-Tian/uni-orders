@@ -3,6 +3,7 @@ node_js:
   - 11.10.0
 services:
   - docker
+  - postgresql
 install:
   - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
   - chmod +x ./kubectl
@@ -19,7 +20,7 @@ cache:
 env:
   ci: true
 before_install:
-  - echo "hello"
+  - psql -U postgres <
 before_script:
   - echo "before script..."
 script:

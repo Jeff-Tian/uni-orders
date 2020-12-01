@@ -1,0 +1,42 @@
+version: "3"
+services:
+  redis-cluster:
+    image: "grokzen/redis-cluster:latest"
+    ports:
+      - "7000-7007:7000-7007"
+      - "5000-5002:5000-5002"
+    environment:
+      IP: "0.0.0.0"
+  pg:
+    image: "postgres:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: orders
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: nopwd
+    volumes:
+    - postgres:/var/lib/postgresql/data
+
+  adminer:
+    image: library/adminer:latest
+    restart: always
+    ports:
+      - 7777:8080
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.2-amd64
+    env_file:
+      - elasticsearch.env
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.2
+    env_file:
+      - kibana.env
+    ports:
+      - 5601:5601
+
+volumes:
+  postgres: ~

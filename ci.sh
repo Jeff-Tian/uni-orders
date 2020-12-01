@@ -1,3 +1,16 @@
+nvm use 12.16.2
+
+npm test
+
+npm run start:dev-env
+echo "dev env started..."
+echo "starting e2e tests..."
+npm run test:e2e
+echo "e2e tests done"
+echo "stopping dev env..."
+npm run stop:dev-env
+echo "dev env stopped."
+
 docker build -t jefftian/uni-orders .
 docker images
 docker run -d -p 127.0.0.1:3000:3000 --name uni-orders jefftian/uni-orders
