@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-enum OrderStatus {
+export enum OrderStatus {
   Created,
   Paid,
   Cancelled,
@@ -32,4 +32,7 @@ export class Order {
 
   @Column()
   timeout_at: Date;
+
+  @Column()
+  remark: string;
 }

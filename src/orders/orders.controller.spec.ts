@@ -4,14 +4,13 @@ import { CreateOrderDto } from '../db/createOrderDto';
 import { Connection } from 'typeorm';
 import { symbols } from '../constants';
 import { OrdersController } from './orders.controller';
+import { mockRepo } from '../../test/mocks';
+import { OrderStatus } from '../db/entities/orders.entity';
+import { identity } from 'rxjs';
 
 describe('OrdersController', () => {
   let ordersController: OrdersController;
 
-  const mockRepo = {
-    create: jest.fn(),
-    save: jest.fn(),
-  };
   const mockRepoProvider = {
     provide: symbols.ORDERS_REPOSITORY,
     useFactory: (_connection: Connection) => mockRepo,
@@ -35,12 +34,15 @@ describe('OrdersController', () => {
       const mockOrder = {
         cents: 1,
       };
-      mockRepo.create.mockReturnValue(mockOrder);
-      mockRepo.save.mockReturnValue(mockOrder);
+      mockRepo.create.mockImplementation(identity);
+      mockRepo.save.mockImplementation(identity);
 
-      expect(
-        await ordersController.create((mockOrder as unknown) as CreateOrderDto),
-      ).toBe(mockOrder);
+      const createdOrder = await ordersController.create(
+        (mockOrder as unknown) as CreateOrderDto,
+      );
+      expect(createdOrder).toMatchObject(expect.objectContaining(mockOrder));
+      expect(createdOrder.created_at).toBeDefined();
+      expect(createdOrder.status).toBe(OrderStatus.Created);
     });
   });
 });
