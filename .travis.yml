@@ -20,7 +20,7 @@ cache:
 env:
   ci: true
 before_install:
-  - psql -U postgres <
+  - psql -U postgres < src/db/init.sql
 before_script:
   - echo "before script..."
 script:
