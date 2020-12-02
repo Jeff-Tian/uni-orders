@@ -34,6 +34,7 @@
     "@nestjs/terminus": "^7.0.1",
     "grpc-health": "^1.6.0",
     "grpc-man": "^1.6.10",
+    "logrocket": "^1.0.14",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",

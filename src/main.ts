@@ -7,6 +7,7 @@ import { grpcClientOptions } from './grpc-client.options';
 import { extendedGrpcOptions } from 'grpc-health/dist/health/health-grpc-client.options';
 import { GrpcOptions } from '@nestjs/microservices';
 import { AppModule } from './app.module';
+import * as LogRocket from 'logrocket';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -25,4 +26,5 @@ async function bootstrap() {
   await app.listen(3000, '0.0.0.0');
 }
 
+LogRocket.init('ch20tr/uni-orders');
 bootstrap();
