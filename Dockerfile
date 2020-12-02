@@ -17,7 +17,7 @@ USER root
 
 COPY package.json yarn.loc[k] package-lock.jso[n] /app/
 
-RUN npm install --production --no-cache --no-audit
+RUN npm install --production --no-cache --no-audit && npm run build
 
 RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \

@@ -7,9 +7,14 @@ import { GrpcOptions } from '@nestjs/microservices';
 import { OrdersModule } from './orders/orders.module';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+    }),
     HealthModule.register(grpcClientOptions as GrpcOptions),
     OrdersModule,
     TerminusModule,

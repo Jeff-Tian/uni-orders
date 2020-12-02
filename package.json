@@ -7,9 +7,9 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build && cp src/orders/orders.proto dist/orders/orders.proto",
+    "build": "npx nest build && cp src/orders/orders.proto dist/orders/orders.proto",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": " cp src/orders/orders.proto dist/orders/orders.proto && nest start",
+    "start": "cp src/orders/orders.proto dist/orders/orders.proto && nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
+    "@nestjs/config": "^0.6.1",
     "@nestjs/core": "^7.5.1",
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/platform-fastify": "^7.5.1",

@@ -17,8 +17,8 @@ spec:
       tier: backend
   strategy:
     rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
+      maxSurge: 0.5
+      maxUnavailable: 0.5
     type: RollingUpdate
   template:
     metadata:
@@ -34,6 +34,26 @@ spec:
           env:
             - name: GET_HOSTS_FROM
               value: dns
+            - name: pgHost
+              valueFrom:
+                secretKeyRef:
+                  key: pgHost
+                  name: uni-orders-secrets
+            - name: pgPort
+              valueFrom:
+                secretKeyRef:
+                  key: pgPort
+                  name: uni-orders-secrets
+            - name: pgUsername
+              valueFrom:
+                secretKeyRef:
+                  key: pgUsername
+                  name: uni-orders-secrets
+            - name: pgPassword
+              valueFrom:
+                secretKeyRef:
+                  key: pgPassword
+                  name: uni-orders-secrets
           ports:
             - containerPort: 3000
               name: http
