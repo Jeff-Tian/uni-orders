@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Put } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
-import { CreateOrderDto } from '../db/createOrderDto';
+import { CreateOrderDto, UpdateOrderDto } from '../db/createOrderDto';
 
 @Controller('orders')
 export class OrdersController {
@@ -20,5 +20,14 @@ export class OrdersController {
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.create(createOrderDto);
+  }
+
+  @GrpcMethod('OrdersService')
+  @Put()
+  update(@Body() updateOrderDto: UpdateOrderDto) {
+    return this.ordersService.update(
+      updateOrderDto.orderId,
+      updateOrderDto.newStatus,
+    );
   }
 }

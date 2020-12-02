@@ -12,6 +12,21 @@ export class OrdersService implements IOrdersService {
     @Inject(symbols.ORDERS_REPOSITORY) private orderRepo: Repository<Order>,
   ) {}
 
+  private async saveOrFail(order: Order) {
+    try {
+      return await this.orderRepo.save(order);
+    } catch (ex) {
+      throw new HttpException({ order, ex }, 400);
+    }
+  }
+
+  async update(orderId: number, newStatus: OrderStatus): Promise<Order> {
+    const order = await this.orderRepo.findOneOrFail(orderId);
+    order.status = newStatus;
+
+    return await this.saveOrFail(order);
+  }
+
   generateOrderNumber() {
     const now = Date.now();
     const time = new Date(now);
@@ -37,10 +52,6 @@ export class OrdersService implements IOrdersService {
       created_at: new Date(),
     } as unknown) as Order);
 
-    try {
-      return await this.orderRepo.save(entity);
-    } catch (ex) {
-      throw new HttpException({ order, ex }, 400);
-    }
+    return await this.saveOrFail(entity);
   }
 }
