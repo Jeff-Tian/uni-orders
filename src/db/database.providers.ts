@@ -7,7 +7,7 @@ const postgresqlConfig = {
   port: process.env.pgPort ?? 5432,
   username: process.env.pgUsername ?? 'postgres',
   password: process.env.pgPassword ?? 'nopwd',
-  database: 'orders',
+  database: process.env.pgDatabase ?? 'orders',
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true,
 } as ConnectionOptions;

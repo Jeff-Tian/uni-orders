@@ -54,6 +54,16 @@ spec:
                 secretKeyRef:
                   key: pgPassword
                   name: uni-orders-secrets
+            - name: POSTGRES_URL
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_URL
+                  name: uni-orders-secrets
+            - name: pgDatabase
+              valueFrom:
+                secretKeyRef:
+                  key: pgDatabase
+                  name: uni-orders-secrets
           ports:
             - containerPort: 3000
               name: http
@@ -63,24 +73,24 @@ spec:
               protocol: TCP
           readinessProbe:
             exec:
-              command: ["/bin/grpc_health_probe", "-addr=:5005"]
+              command: ['/bin/grpc_health_probe', '-addr=:5005']
             initialDelaySeconds: 5
             periodSeconds: 10
             failureThreshold: 30
-# * spec.template.spec.containers[0].readinessProbe.httpGet: Forbidden: may not specify more than 1 handler type
-#            httpGet:
-#              port: 3000
-#              path: /health
+          # * spec.template.spec.containers[0].readinessProbe.httpGet: Forbidden: may not specify more than 1 handler type
+          #            httpGet:
+          #              port: 3000
+          #              path: /health
           livenessProbe:
             exec:
-              command: ["/bin/grpc_health_probe", "-addr=:5005"]
+              command: ['/bin/grpc_health_probe', '-addr=:5005']
             initialDelaySeconds: 5
             periodSeconds: 10
             failureThreshold: 30
-# * spec.template.spec.containers[0].livenessProbe.httpGet: Forbidden: may not specify more than 1 handler type
-#            httpGet:
-#              port: 3000
-#              path: /
+          # * spec.template.spec.containers[0].livenessProbe.httpGet: Forbidden: may not specify more than 1 handler type
+          #            httpGet:
+          #              port: 3000
+          #              path: /
           resources:
             limits:
               cpu: 500m
