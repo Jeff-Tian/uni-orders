@@ -26,17 +26,7 @@ before_script:
 script:
   - npm test
   - npm run test:e2e
-  - npm run build
-  - docker build -t "$DOCKER_USERNAME"/uni-orders .
-  - docker images
-  - docker run -d -p 127.0.0.1:3000:3000 --name uni-orders "$DOCKER_USERNAME"/uni-orders
-  - docker ps | grep -q uni-orders
-  - docker ps -aqf "name=uni-orders$"
-  - docker push "$DOCKER_USERNAME"/uni-orders
-  - docker logs $(docker ps -aqf name=uni-orders$)
-  - curl localhost:3000 || docker logs $(docker ps -aqf name=uni-orders$)
-  - docker kill uni-orders || echo "uni-orders killed"
-  - docker rm uni-orders || echo "uni-orders removed"
+  - sh .travis/ci.sh
 deploy:
   - provider: script
     skip_cleanup: true
