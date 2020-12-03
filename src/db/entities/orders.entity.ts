@@ -18,6 +18,9 @@ export class Order {
   @Column({})
   cents: number;
 
+  @Column({})
+  randomDiscountCents: number;
+
   @Column()
   status: OrderStatus;
 

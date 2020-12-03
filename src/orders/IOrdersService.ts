@@ -7,4 +7,6 @@ export interface IOrdersService {
   create(createOrderDto: CreateOrderDto): Promise<Order>;
 
   update(orderId: number, newStatus: OrderStatus): Promise<Order>;
+
+  getById(orderId: number): Promise<Order>;
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Inject, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
@@ -14,6 +22,12 @@ export class OrdersController {
   @Get()
   list() {
     return this.ordersService.findAll();
+  }
+
+  @GrpcMethod('OrdersService')
+  @Get(':id')
+  getById(@Param() params) {
+    return this.ordersService.getById(params.id);
   }
 
   @GrpcMethod('OrdersService')

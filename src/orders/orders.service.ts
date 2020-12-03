@@ -38,6 +38,10 @@ export class OrdersService implements IOrdersService {
     return this.orderRepo.find();
   }
 
+  async getById(orderId: number): Promise<Order> {
+    return this.orderRepo.findOneOrFail(orderId);
+  }
+
   async create(order: CreateOrderDto): Promise<Order> {
     try {
       assert.ok(order.cents);
@@ -47,11 +51,16 @@ export class OrdersService implements IOrdersService {
 
     const entity = this.orderRepo.create(({
       ...order,
+      randomDiscountCents: this.getRandomDiscountCents(order.cents),
       number: this.generateOrderNumber(),
       status: OrderStatus.Created,
       created_at: new Date(),
     } as unknown) as Order);
 
     return await this.saveOrFail(entity);
+  }
+
+  private getRandomDiscountCents(cents: number) {
+    return 1 + Math.floor(Math.random() * cents);
   }
 }
