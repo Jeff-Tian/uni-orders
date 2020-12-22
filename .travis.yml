@@ -32,4 +32,4 @@ deploy:
     skip_cleanup: true
     script: npm run okteto
     on:
-      branch: main
+      all_branches: true
