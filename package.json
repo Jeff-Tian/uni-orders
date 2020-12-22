@@ -36,6 +36,7 @@
     "fastify-swagger": "^3.5.0",
     "grpc-health": "^1.6.0",
     "grpc-man": "^1.6.10",
+    "halson": "^3.0.0",
     "logrocket": "^1.0.14",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",

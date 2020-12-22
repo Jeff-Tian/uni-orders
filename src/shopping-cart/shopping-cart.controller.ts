@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Post, Put } from '@nestjs/common';
-import { ApiBody, ApiProperty, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiHeaders, ApiProperty, ApiTags } from '@nestjs/swagger';
+import * as halson from 'halson';
 
 class CartItem {
   @ApiProperty({
@@ -51,23 +52,33 @@ class ModifiedCartItem {
 }
 
 @ApiTags('shopping-cart')
+@ApiHeaders([
+  {
+    name: 'x-api-key',
+    description: 'api key to call this endpoint',
+  },
+  {
+    name: 'authorization',
+    description: 'Bearer token to call this endpoint',
+  },
+])
 @Controller('shopping-cart')
 export class ShoppingCartController {
   @Post()
   @ApiBody({ type: [CartItem] })
   addToCart(@Body() items: CartItem[]) {
-    return items;
+    return halson(items);
   }
 
   @Put()
   @ApiBody({ type: [ModifiedCartItem] })
   modifyCart(@Body() modifiedItems: ModifiedCartItem[]) {
-    return modifiedItems;
+    return halson(modifiedItems);
   }
 
   @Delete()
   @ApiBody({ type: [String] })
   deleteFromCart(@Body() deletedLineIds: string[]) {
-    return deletedLineIds;
+    return halson(deletedLineIds);
   }
 }
