@@ -67,18 +67,20 @@ export class ShoppingCartController {
   @Post()
   @ApiBody({ type: [CartItem] })
   addToCart(@Body() items: CartItem[]) {
-    return halson(items);
+    return halson({
+      items,
+    });
   }
 
   @Put()
   @ApiBody({ type: [ModifiedCartItem] })
   modifyCart(@Body() modifiedItems: ModifiedCartItem[]) {
-    return halson(modifiedItems);
+    return halson({ items: modifiedItems });
   }
 
   @Delete()
   @ApiBody({ type: [String] })
   deleteFromCart(@Body() deletedLineIds: string[]) {
-    return halson(deletedLineIds);
+    return halson({ lines: deletedLineIds });
   }
 }
