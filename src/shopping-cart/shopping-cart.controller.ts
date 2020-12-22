@@ -1,46 +1,72 @@
 import { Body, Controller, Delete, Post, Put } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiBody, ApiProperty, ApiTags } from '@nestjs/swagger';
 
 class CartItem {
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    description: 'The skuId for the cart item',
+  })
   skuId: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: Number,
+    description: 'The count of the item added to cart',
+    minimum: 1,
+  })
   count: number;
 }
 
-class ModifiedCartItem {
-  @ApiProperty()
-  lineId: string;
-
-  @ApiProperty()
-  modifications: CartItemModifications;
-}
-
 class CartItemModifications {
-  @ApiProperty()
+  @ApiProperty({
+    type: Boolean,
+    description: 'Whether the cart item is selected or not',
+  })
   checked?: boolean;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: Number,
+    description: 'The changed number of the cart item',
+  })
   count?: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    type: String,
+    description: 'The changed skuId of the cart item',
+  })
   skuId: string;
 }
 
+class ModifiedCartItem {
+  @ApiProperty({
+    type: String,
+    description: 'The lineId of the cart item',
+  })
+  lineId: string;
+
+  @ApiProperty({
+    type: CartItemModifications,
+    description: 'The modifications to the cart item',
+  })
+  modifications: CartItemModifications;
+}
+
+@ApiTags('shopping-cart')
 @Controller('shopping-cart')
 export class ShoppingCartController {
   @Post()
+  @ApiBody({ type: [CartItem] })
   addToCart(@Body() items: CartItem[]) {
     return items;
   }
 
   @Put()
+  @ApiBody({ type: [ModifiedCartItem] })
   modifyCart(@Body() modifiedItems: ModifiedCartItem[]) {
     return modifiedItems;
   }
 
   @Delete()
+  @ApiBody({ type: [String] })
   deleteFromCart(@Body() deletedLineIds: string[]) {
     return deletedLineIds;
   }
