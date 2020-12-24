@@ -17,10 +17,10 @@ async function bootstrap() {
   );
 
   const options = new DocumentBuilder()
-    .setTitle('Shopping Cart')
-    .setDescription('The shopping cart API description')
+    .setTitle('Uni Order System')
+    .setDescription('All about orders')
     .setVersion('1.0')
-    .addTag('shopping-cart')
+    .addTag('uni-orders')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
