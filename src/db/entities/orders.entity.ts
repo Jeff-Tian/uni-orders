@@ -28,13 +28,13 @@ export class Order {
   created_at: Date;
 
   @Column()
-  paid_at: Date;
+  paid_at?: Date;
 
   @Column()
-  cancelled_at: Date;
+  cancelled_at?: Date;
 
   @Column()
-  timeout_at: Date;
+  timeout_at?: Date;
 
   @Column()
   remark: string;

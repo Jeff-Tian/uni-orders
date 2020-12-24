@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "ci": "sh ci.sh",
-    "okteto": "k8ss switch --cluster=okteto --namespace=jeff-tian&&kubectl apply -k k8s",
+    "okteto": "k8ss switch --cluster=okteto --namespace=jeff-tian&&kubectl apply -k k8s&&kubectl rollout restart deploy uni-orders",
     "start:dev-env": "export REDIS_CLUSTER_IP=0.0.0.0 && docker-compose -f docker-compose.yaml up -d",
     "stop:dev-env": "docker-compose -f docker-compose.yaml down",
     "k6": "k6 run -u 100 -duration 1m test/k6.js"
