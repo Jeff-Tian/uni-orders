@@ -34,7 +34,11 @@ export class OrdersController {
   @GrpcMethod('OrdersService')
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+    return this.ordersService.create(
+      typeof createOrderDto === 'string'
+        ? JSON.parse(createOrderDto)
+        : createOrderDto,
+    );
   }
 
   @GrpcMethod('OrdersService')
