@@ -27,13 +27,19 @@ export class Order {
   @Column()
   created_at: Date;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   paid_at?: Date;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   cancelled_at?: Date;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   timeout_at?: Date;
 
   @Column()
