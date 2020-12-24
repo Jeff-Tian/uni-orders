@@ -11,6 +11,7 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
 import { CreateOrderDto, UpdateOrderDto } from '../db/createOrderDto';
+import * as halson from 'halson';
 
 @Controller('orders')
 export class OrdersController {
@@ -21,7 +22,7 @@ export class OrdersController {
   @GrpcMethod('OrdersService')
   @Get()
   list() {
-    return this.ordersService.findAll();
+    return halson({ data: this.ordersService.findAll() });
   }
 
   @GrpcMethod('OrdersService')
