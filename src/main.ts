@@ -9,12 +9,15 @@ import { GrpcOptions } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 import * as LogRocket from 'logrocket';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './filters/HttpExceptionFilter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter({ logger: true }),
   );
+
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const options = new DocumentBuilder()
     .setTitle('Uni Order System')

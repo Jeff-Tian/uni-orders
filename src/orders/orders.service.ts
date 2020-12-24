@@ -1,13 +1,16 @@
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
 import { Repository } from 'typeorm';
 import { Order, OrderStatus } from '../db/entities/orders.entity';
 import { CreateOrderDto } from '../db/createOrderDto';
 import assert = require('assert');
+import * as util from 'util';
 
 @Injectable()
 export class OrdersService implements IOrdersService {
+  private readonly logger = new Logger(OrdersService.name);
+
   constructor(
     @Inject(symbols.ORDERS_REPOSITORY) private orderRepo: Repository<Order>,
   ) {}
@@ -46,6 +49,7 @@ export class OrdersService implements IOrdersService {
     try {
       assert.ok(order.cents);
     } catch (ex) {
+      this.logger.error(ex.message, ex.stack, util.inspect(order));
       throw new HttpException({ order, ex }, 400);
     }
 
