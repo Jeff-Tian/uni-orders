@@ -21,8 +21,8 @@ export class OrdersController {
 
   @GrpcMethod('OrdersService')
   @Get()
-  list() {
-    return halson({ data: this.ordersService.findAll() });
+  async list() {
+    return halson({ data: await this.ordersService.findAll() });
   }
 
   @GrpcMethod('OrdersService')
