@@ -19,7 +19,10 @@ export class OrdersService implements IOrdersService {
     try {
       return await this.orderRepo.save(order);
     } catch (ex) {
-      throw new HttpException({ order, ex }, 400);
+      const errorContext = { order, ex };
+      this.logger.error(ex.message, ex.stack, util.inspect(errorContext));
+
+      throw new HttpException(errorContext, 400);
     }
   }
 

@@ -6,6 +6,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import * as util from 'util';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -19,6 +20,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     this.logger.error(exception.message, exception.stack, request.url);
 
-    response.status(status).json(exception);
+    response.status(status).json(util.inspect(exception));
   }
 }
