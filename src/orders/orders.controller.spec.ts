@@ -29,20 +29,33 @@ describe('OrdersController', () => {
     ordersController = app.get<OrdersController>(OrdersController);
   });
 
-  describe('create', () => {
-    it('creates order', async () => {
-      const mockOrder = {
-        cents: 1,
-      };
+  describe('create/update', () => {
+    const mockOrder = {
+      cents: 1,
+    };
+
+    beforeAll(() => {
       mockRepo.create.mockImplementation(identity);
       mockRepo.save.mockImplementation(identity);
+      mockRepo.findOneOrFail.mockImplementation(() => mockOrder);
+    });
 
+    it('creates order', async () => {
       const createdOrder = await ordersController.create(
         (mockOrder as unknown) as CreateOrderDto,
       );
       expect(createdOrder).toMatchObject(expect.objectContaining(mockOrder));
       expect(createdOrder.created_at).toBeDefined();
       expect(createdOrder.status).toBe(OrderStatus.Created);
+    });
+
+    it('patches an order', async () => {
+      const updatedOrder = await ordersController.update({
+        id: 1234,
+        status: '3',
+      } as any);
+
+      expect(updatedOrder.status).toEqual(OrderStatus.Timeout);
     });
   });
 });

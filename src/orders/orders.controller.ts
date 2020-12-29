@@ -12,6 +12,7 @@ import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
 import { CreateOrderDto, UpdateOrderDto } from '../db/createOrderDto';
 import * as halson from 'halson';
+import { OrderStatus } from '../db/entities/orders.entity';
 
 @Controller('orders')
 export class OrdersController {
@@ -44,9 +45,11 @@ export class OrdersController {
   @GrpcMethod('OrdersService')
   @Patch()
   update(@Body() updateOrderDto: UpdateOrderDto) {
+    const orderStatusString = OrderStatus[updateOrderDto.status.toString()];
+
     return this.ordersService.update(
       updateOrderDto.orderId,
-      updateOrderDto.status,
+      OrderStatus[orderStatusString] as any,
     );
   }
 }
