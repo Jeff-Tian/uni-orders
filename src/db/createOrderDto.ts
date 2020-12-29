@@ -14,5 +14,5 @@ export class UpdateOrderDto {
   orderId: number;
 
   @ApiProperty()
-  newStatus: OrderStatus;
+  status: OrderStatus;
 }

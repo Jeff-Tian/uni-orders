@@ -46,7 +46,7 @@ export class OrdersController {
   update(@Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.update(
       updateOrderDto.orderId,
-      updateOrderDto.newStatus,
+      updateOrderDto.status,
     );
   }
 }
