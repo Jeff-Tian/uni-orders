@@ -11,7 +11,7 @@ export class CreateOrderDto {
 
 export class UpdateOrderDto {
   @ApiProperty()
-  orderId: number;
+  id: number;
 
   @ApiProperty()
   status: OrderStatus;
