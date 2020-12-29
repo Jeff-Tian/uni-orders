@@ -4,8 +4,8 @@ import {
   Get,
   Inject,
   Param,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { IOrdersService } from './IOrdersService';
@@ -42,7 +42,7 @@ export class OrdersController {
   }
 
   @GrpcMethod('OrdersService')
-  @Put()
+  @Patch()
   update(@Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.update(
       updateOrderDto.orderId,
