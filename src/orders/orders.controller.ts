@@ -49,7 +49,14 @@ export class OrdersController {
   @GrpcMethod('OrdersService')
   @Patch()
   update(@Body() updateOrderDto: UpdateOrderDto) {
-    this.logger.log('got updating request for ', util.inspect(updateOrderDto));
+    this.logger.log(
+      `got updating request for ${typeof updateOrderDto}`,
+      util.inspect(updateOrderDto),
+    );
+
+    if (typeof updateOrderDto === 'string') {
+      updateOrderDto = JSON.parse(updateOrderDto);
+    }
     const orderStatusString = OrderStatus[updateOrderDto.status.toString()];
 
     return this.ordersService.update(
