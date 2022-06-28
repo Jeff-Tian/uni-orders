@@ -19,6 +19,8 @@ jobs:
         image: postgres
         env:
           POSTGRES_PASSWORD: nopwd
+          POSTGRES_USER: postgres
+          POSTGRES_DB: orders
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
