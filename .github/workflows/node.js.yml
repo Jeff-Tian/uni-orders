@@ -14,6 +14,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 2
+
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
