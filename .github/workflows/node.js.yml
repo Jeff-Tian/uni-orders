@@ -46,3 +46,10 @@ jobs:
     - run: npm test
     - run: npm run test:e2e
     - run: npm run test:cov
+    - run: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - run: chmod +x ./kubectl
+    - run: sudo mv ./kubectl /usr/local/bin/kubectl
+    - run: mkdir ${HOME}/.kube
+    - run: npm i -g k8ss
+    - run: echo -e "machine github.com\n  login ${{secrets.GH_TOKEN}}" > ~/.netrc
+    - run: git clone https://github.com/Jeff-Tian/k8s-config.git ${HOME}/k8s-config
