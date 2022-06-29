@@ -10,7 +10,25 @@ on:
     branches: [ "main" ]
 
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+      - run: chmod +x ./kubectl
+      - run: sudo mv ./kubectl /usr/local/bin/kubectl
+      - run: mkdir ${HOME}/.kube
+      - run: npm i -g k8ss
+      - run: echo -e "machine github.com\n  login ${{secrets.GH_TOKEN}}" > ~/.netrc
+      - run: git clone https://github.com/Jeff-Tian/k8s-config.git ${HOME}/k8s-config
+      - run: npm run okteto
+
   build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{secrets.DOCKER_PASSWORD}}" | docker login -u "${{secrets.DOCKER_USERNAME}}" --password-stdin
+      - run: sh .travis/ci.sh
+
+  test:
 
     runs-on: ubuntu-latest
 
@@ -46,13 +64,3 @@ jobs:
     - run: npm test
     - run: npm run test:e2e
     - run: npm run test:cov
-    - run: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    - run: chmod +x ./kubectl
-    - run: sudo mv ./kubectl /usr/local/bin/kubectl
-    - run: mkdir ${HOME}/.kube
-    - run: echo "${{secrets.DOCKER_PASSWORD}}" | docker login -u "${{secrets.DOCKER_USERNAME}}" --password-stdin
-    - run: npm i -g k8ss
-    - run: echo -e "machine github.com\n  login ${{secrets.GH_TOKEN}}" > ~/.netrc
-    - run: git clone https://github.com/Jeff-Tian/k8s-config.git ${HOME}/k8s-config
-    - run: sh .travis/ci.sh
-    - run: npm run okteto
