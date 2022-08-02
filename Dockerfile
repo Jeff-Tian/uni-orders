@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:16
 
 # Built by deploy-node-app
 
@@ -15,16 +15,14 @@ RUN apt-get update && apt-get install -yqq nginx && \
 
 USER root
 
-COPY package.json yarn.loc[k] package-lock.jso[n] /app/
+COPY . .
 
-RUN npm install --production --no-cache --no-audit
-RUN npm run build
+RUN npm i -g @nestjs/cli@7.5.1
+RUN yarn && nest build && cp src/orders/orders.proto dist/orders/orders.proto
 
 RUN GRPC_HEALTH_PROBE_VERSION=v0.3.1 && \
     wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
     chmod +x /bin/grpc_health_probe
-
-COPY . /app/
 
 EXPOSE 3000
 
