@@ -27,7 +27,7 @@ export class Order {
   randomDiscountCents: number;
 
   @Column()
-  @ApiProperty()
+  @ApiProperty({ enum: OrderStatus, enumName: 'OrderStatus' })
   status: OrderStatus;
 
   @Column()
