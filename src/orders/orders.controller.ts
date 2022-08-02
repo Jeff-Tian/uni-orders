@@ -14,7 +14,7 @@ import { symbols } from '../constants';
 import * as halson from 'halson';
 import { OrderStatus } from '../db/entities/orders.entity';
 import * as util from 'util';
-import { CreateOrderDto, UpdateOrderDto } from 'src/db/create.order.dto';
+import { CreateOrderDto, UpdateOrderDto } from '../db/create.order.dto';
 
 @Controller('orders')
 export class OrdersController {
