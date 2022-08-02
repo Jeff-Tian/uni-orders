@@ -2,9 +2,9 @@ version: "3"
 services:
   redis-cluster:
     image: "grokzen/redis-cluster:latest"
-    ports:
-      - "7000-7007:7000-7007"
-      - "5000-5002:5000-5002"
+#    ports:
+#      - "7000-7007:7000-7007"
+#      - "5000-5002:5000-5002"
     environment:
       IP: "0.0.0.0"
   pg:

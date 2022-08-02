@@ -11,10 +11,10 @@ import {
 import { GrpcMethod } from '@nestjs/microservices';
 import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
-import { CreateOrderDto, UpdateOrderDto } from '../db/createOrderDto';
 import * as halson from 'halson';
 import { OrderStatus } from '../db/entities/orders.entity';
 import * as util from 'util';
+import { CreateOrderDto, UpdateOrderDto } from 'src/db/create.order.dto';
 
 @Controller('orders')
 export class OrdersController {

@@ -3,9 +3,9 @@ import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
 import { Repository } from 'typeorm';
 import { Order, OrderStatus } from '../db/entities/orders.entity';
-import { CreateOrderDto } from '../db/createOrderDto';
 import assert = require('assert');
 import * as util from 'util';
+import { CreateOrderDto } from 'src/db/create.order.dto';
 
 @Injectable()
 export class OrdersService implements IOrdersService {

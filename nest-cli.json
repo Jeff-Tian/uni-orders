@@ -1,5 +1,18 @@
 {
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
-  "assets": ["**/*.proto"]
+  "assets": [
+    "**/*.proto"
+  ],
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "classValidatorShim": false,
+          "introspectComments": true
+        }
+      }
+    ]
+  }
 }
