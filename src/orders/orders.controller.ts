@@ -32,8 +32,8 @@ export class OrdersController {
 
   @GrpcMethod('OrdersService')
   @Get(':id')
-  getById(@Param() params) {
-    return this.ordersService.getById(params.id);
+  getById(@Param('id') id: number) {
+    return this.ordersService.getById(id);
   }
 
   @GrpcMethod('OrdersService')
