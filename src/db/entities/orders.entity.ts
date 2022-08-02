@@ -55,4 +55,16 @@ export class Order {
   @Column()
   @ApiProperty()
   remark: string;
+
+  @Column({
+    nullable: true,
+  })
+  @ApiProperty()
+  type: string;
+
+  @Column({
+    nullable: true,
+  })
+  @ApiProperty()
+  paymentMethod: string;
 }

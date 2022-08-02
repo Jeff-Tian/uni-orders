@@ -7,6 +7,12 @@ export class CreateOrderDto {
 
   @ApiProperty()
   remark: string;
+
+  @ApiProperty()
+  type: string;
+
+  @ApiProperty()
+  paymentMethod: string;
 }
 
 export class UpdateOrderDto {
