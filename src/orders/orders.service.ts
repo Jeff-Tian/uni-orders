@@ -2,10 +2,11 @@ import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
 import { Repository } from 'typeorm';
-import { Order, OrderStatus } from '../db/entities/orders.entity';
+import { Order} from '../db/entities/orders.entity';
 import assert = require('assert');
 import * as util from 'util';
 import { CreateOrderDto } from 'src/db/create.order.dto';
+import {OrderStatus} from "../db/entities/orderStatus";
 
 @Injectable()
 export class OrdersService implements IOrdersService {

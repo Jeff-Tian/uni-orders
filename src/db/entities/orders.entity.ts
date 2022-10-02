@@ -1,12 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-
-export enum OrderStatus {
-  Created,
-  Paid,
-  Cancelled,
-  Timeout,
-}
+import { OrderStatus } from './orderStatus';
+import { Payment } from './payments.entity';
 
 @Entity()
 export class Order {
@@ -15,7 +16,7 @@ export class Order {
   id: number;
 
   @Column({ unique: true })
-  @ApiProperty()
+  @ApiProperty({ description: '订单编号' })
   number: string;
 
   @Column({})
@@ -23,7 +24,7 @@ export class Order {
   cents: number;
 
   @Column({})
-  @ApiProperty()
+  @ApiProperty({ description: '随机优惠金额' })
   randomDiscountCents: number;
 
   @Column()
@@ -67,4 +68,8 @@ export class Order {
   })
   @ApiProperty()
   paymentMethod: string;
+
+  @OneToMany((type) => Payment, (payment) => payment.order_id)
+  @JoinColumn()
+  payment: Payment;
 }

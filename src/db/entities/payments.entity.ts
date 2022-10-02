@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Order } from './orders.entity';
 
 @Entity()
 export class Payment {
@@ -50,4 +51,12 @@ export class Payment {
   @Column()
   @ApiProperty()
   total_refund_fee: number;
+
+  @Column()
+  @ApiProperty()
+  order_id: number;
+
+  @ManyToOne((type) => Order, (order) => order.id)
+  @JoinColumn()
+  order: Order;
 }

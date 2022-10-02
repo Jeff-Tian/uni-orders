@@ -4,9 +4,9 @@ import { Connection } from 'typeorm';
 import { symbols } from '../constants';
 import { OrdersController } from './orders.controller';
 import { mockRepo } from '../../test/mocks';
-import { OrderStatus } from '../db/entities/orders.entity';
 import { identity } from 'rxjs';
 import { CreateOrderDto } from '../db/create.order.dto';
+import {OrderStatus} from "../db/entities/orderStatus";
 
 describe('OrdersController', () => {
   let ordersController: OrdersController;
