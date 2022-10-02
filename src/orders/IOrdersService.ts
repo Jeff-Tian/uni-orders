@@ -1,6 +1,6 @@
-import { Order} from '../db/entities/orders.entity';
+import { Order } from '../db/entities/orders.entity';
 import { CreateOrderDto } from '../db/create.order.dto';
-import {OrderStatus} from "../db/entities/orderStatus";
+import { OrderStatus } from '../db/entities/orderStatus';
 
 export interface IOrdersService {
   findAll(): Promise<Order[]>;

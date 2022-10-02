@@ -2,11 +2,12 @@ import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
 import { Repository } from 'typeorm';
-import { Order} from '../db/entities/orders.entity';
+import { Order } from '../db/entities/orders.entity';
 import assert = require('assert');
 import * as util from 'util';
 import { CreateOrderDto } from 'src/db/create.order.dto';
-import {OrderStatus} from "../db/entities/orderStatus";
+import { OrderStatus } from '../db/entities/orderStatus';
+import { PaymentService } from '../payments/payment.service';
 
 @Injectable()
 export class OrdersService implements IOrdersService {
@@ -14,6 +15,7 @@ export class OrdersService implements IOrdersService {
 
   constructor(
     @Inject(symbols.ORDERS_REPOSITORY) private orderRepo: Repository<Order>,
+    private readonly paymentService: PaymentService,
   ) {}
 
   private async saveOrFail(order: Order) {
@@ -46,7 +48,13 @@ export class OrdersService implements IOrdersService {
   }
 
   async getById(orderId: number): Promise<Order> {
-    return this.orderRepo.findOneOrFail(orderId);
+    const order = await this.orderRepo.findOneOrFail(orderId);
+
+    if (order.paymentMethod === 'wecom') {
+      await this.paymentService.findAndUpdatePaymentsFor(order);
+    }
+
+    return order;
   }
 
   async create(order: CreateOrderDto): Promise<Order> {

@@ -26,6 +26,7 @@
     "k6": "k6 run -u 100 -duration 1m test/k6.js"
   },
   "dependencies": {
+    "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^7.5.1",
     "@nestjs/config": "^0.6.1",
     "@nestjs/core": "^7.5.1",
