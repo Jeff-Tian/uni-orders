@@ -1,6 +1,9 @@
 ## uni-orders
 
-LIVE URL: https://uni-orders-jeff-tian.cloud.okteto.net/
+LIVE URLs:
+- ~~https://uni-orders-jeff-tian.cloud.okteto.net/~~
+- https://uni-orders-cctsq03nniljeo1bj0ng.apps.playground.napptive.dev/api/static/index.html
+
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
