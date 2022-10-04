@@ -52,7 +52,7 @@ export class OrdersService implements IOrdersService {
         const order = await this.orderRepo.findOneOrFail(orderId);
 
         if (order.paymentMethod === 'wecom-pay') {
-            this.logger.info(`查询支付记录 ${JSON.stringify(order)}`)
+            this.logger.log(`查询支付记录 ${JSON.stringify(order)}`)
             await this.paymentService.findAndUpdatePaymentsFor(order);
         }
 
