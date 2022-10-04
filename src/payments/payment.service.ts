@@ -34,7 +34,7 @@ export class PaymentService {
   }
 
   private async findPaymentsFor(order: Order): Promise<Payment[]> {
-    const url = `https://leg-godt.azurewebsites.net/api/wecom/Bill/hardmoney/${order.created_at}?cents=${order.cents}`;
+    const url = `https://leg-godt.azurewebsites.net/api/wecom/Bill/hardmoney/${order.created_at.getTime()}?cents=${order.cents}`;
 
     this.logger.log(`查询订单 ${order.id} 的 url 是 ${url}`);
 

@@ -1,9 +1,11 @@
 import { OrdersService } from './orders.service';
 import { mockRepo } from '../../test/mocks';
+import {PaymentService} from "../payments/payment.service";
+import {HttpService} from "@nestjs/axios";
 
 describe('order service', () => {
   const mockedNow = jest.fn();
-  const orderService = new OrdersService(mockRepo as any);
+  const orderService = new OrdersService(mockRepo as any, new PaymentService(mockRepo as any, mockRepo as any, new HttpService()));
 
   beforeEach(() => {
     Date.now = mockedNow.mockReturnValue(
