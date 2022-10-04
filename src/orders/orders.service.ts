@@ -50,7 +50,7 @@ export class OrdersService implements IOrdersService {
   async getById(orderId: number): Promise<Order> {
     const order = await this.orderRepo.findOneOrFail(orderId);
 
-    if (order.paymentMethod === 'wecom') {
+    if (order.paymentMethod === 'wecom-pay') {
       await this.paymentService.findAndUpdatePaymentsFor(order);
     }
 
