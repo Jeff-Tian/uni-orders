@@ -1,0 +1,44 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: uni-orders
+  annotations: # include optional annotations and/or labels.
+    version: v1.0.0
+    description: "uni-orders"
+spec:
+  components:
+    - name: uni-orders
+      type: webservice
+      properties:
+        image: jefftian/uni-orders:latest
+        ports:
+          - port: 3000
+            expose: true
+      traits:
+        - type: napptive-ingress # a napptive-ingress trait to get a public endpoint
+          properties:
+            name: uni-orders
+            port: 3000
+            path: /
+
+        - type: service-binding
+          properties:
+            envMappings:
+              pgHost:
+                secret: uni-orders-secrets
+                key: pgHost
+              pgPort:
+                secret: uni-orders-secrets
+                key: pgPort
+              pgUsername:
+                secret: uni-orders-secrets
+                key: pgUsername
+              pgPassword:
+                secret: uni-orders-secrets
+                key: pgPassword
+              POSTGRES_URL:
+                secret: uni-orders-secrets
+                key: POSTGRES_URL
+              pgDatabase:
+                secret: uni-orders-secrets
+                key: pgDatabase

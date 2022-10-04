@@ -1,0 +1,30 @@
+apiVersion: core.napptive.com/v1alpha1
+kind: ApplicationMetadata
+# Name of the application, not necessarily a valid k8s name.
+name: "uni-orders"
+version: 1.0
+description: uni-orders
+# Keywords facilitate searches on the catalog
+keywords:
+  - "orders"
+license: "Apache License Version 2.0"
+url: "https://..."
+doc: "https://..."
+# Requires gives a list of entities that are needed to launch the application.
+requires:
+  traits:
+    - uni.orders.trait
+  scopes:
+    - uni.orders.scope
+  # K8s lists Kubernetes specific entities. This provides a separation between OAM entities
+  # in an orchestration-agnostic environment, and applications that specifically require Kubernetes.
+  k8s:
+    - apiVersion: uni.orders.package
+      kind: CustomEntityKind
+      name: uni-orders
+# The logo can be used as visual information when listing the catalog so the user
+# recognizes more easily the application.
+logo:
+  - src: "https://images.ctfassets.net/qixg1o8tujmf/7z1ua3nTOC5B7DwwzAki8I/4e1a05f8db770c285a492eeb1eaa398f/imageedit_3_2509022194.png"
+    type: "image/png"
+    size: "250x00"
