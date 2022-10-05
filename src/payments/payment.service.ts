@@ -22,6 +22,13 @@ export class PaymentService {
         const payments = await this.findPaymentsFor(order);
         this.logger.log(`订单 ${order.id} 的支付记录查询结果是： ${payments}`)
 
+        if ((new Date().getTime()) - order.created_at.getTime() >= 10 * 60 * 1000) {
+            order.status = OrderStatus.Timeout;
+            await this.orderRepo.save(order);
+
+            return;
+        }
+
         if (payments && payments.length > 0) {
             order.paid_at = new Date(payments[0].pay_time * 1000);
             order.status = OrderStatus.Paid;
@@ -35,7 +42,8 @@ export class PaymentService {
     }
 
     private async findPaymentsFor(order: Order): Promise<Payment[]> {
-        const url = `https://leg-godt.azurewebsites.net/api/wecom/Bill/hardmoney/${Math.floor(order.created_at.getTime() / 1000)}?cents=${order.cents}`;
+        const totalFee = order.cents - order.randomDiscountCents;
+        const url = `https://leg-godt.azurewebsites.net/api/wecom/Bill/hardmoney/${Math.floor(order.created_at.getTime() / 1000)}?cents=${totalFee}`;
 
         this.logger.log(`查询订单 ${order.id} 的 url 是 ${url}`);
 

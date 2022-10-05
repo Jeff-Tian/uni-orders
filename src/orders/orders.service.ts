@@ -3,11 +3,11 @@ import {IOrdersService} from './IOrdersService';
 import {symbols} from '../constants';
 import {Repository} from 'typeorm';
 import {Order} from '../db/entities/orders.entity';
-import assert = require('assert');
 import * as util from 'util';
 import {CreateOrderDto} from 'src/db/create.order.dto';
 import {OrderStatus} from '../db/entities/orderStatus';
 import {PaymentService} from '../payments/payment.service';
+import assert = require('assert');
 
 @Injectable()
 export class OrdersService implements IOrdersService {
@@ -51,7 +51,7 @@ export class OrdersService implements IOrdersService {
     async getById(orderId: number): Promise<Order> {
         const order = await this.orderRepo.findOneOrFail(orderId);
 
-        if (order.paymentMethod === 'wecom-pay') {
+        if (order.paymentMethod === 'wecom-pay' && order.status !== OrderStatus.Timeout && order.status !== OrderStatus.Cancelled && order.status !== OrderStatus.Paid) {
             this.logger.log(`查询支付记录 ${JSON.stringify(order)}`)
             await this.paymentService.findAndUpdatePaymentsFor(order);
         }
