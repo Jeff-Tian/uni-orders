@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: napptive-actions/playground-github-action@v4.1.0
         env:
-          PLAYGROUND_PAT: ${{ secrets.GH_TOKEN }}
+          PLAYGROUND_PAT: ${{ secrets.PLAYGROUND_PAT }}
         with:
           cmd: "apps deploy uni-orders.yaml"
 
