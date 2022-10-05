@@ -22,13 +22,6 @@ export class PaymentService {
         const payments = await this.findPaymentsFor(order);
         this.logger.log(`订单 ${order.id} 的支付记录查询结果是： ${payments}`)
 
-        if ((new Date().getTime()) - order.created_at.getTime() >= 10 * 60 * 1000) {
-            order.status = OrderStatus.Timeout;
-            await this.orderRepo.save(order);
-
-            return;
-        }
-
         if (payments && payments.length > 0) {
             order.paid_at = new Date(payments[0].pay_time * 1000);
             order.status = OrderStatus.Paid;
@@ -38,6 +31,14 @@ export class PaymentService {
                 payment.order_id = order.id;
                 this.paymentRepo.save(payment);
             });
+        } else if (payments.length === 0) {
+            const now = new Date();
+
+            if (now.getTime() - order.created_at.getTime() >= 10 * 60 * 1000) {
+                order.status = OrderStatus.Timeout;
+                order.timeout_at = now;
+                await this.orderRepo.save(order);
+            }
         }
     }
 
