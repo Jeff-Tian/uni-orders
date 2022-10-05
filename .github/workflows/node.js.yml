@@ -10,7 +10,19 @@ on:
     branches: [ "main" ]
 
 jobs:
-  deploy:
+  deploy-napptive:
+    name: Deploy to napptive
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: napptive-actions/playground-github-action@v4.1.0
+        env:
+          PLAYGROUND_PAT: ${{ secrets.GH_TOKEN }}
+        with:
+          cmd: "apps deploy uni-orders.yaml"
+
+  deploy-okteto:
     runs-on: ubuntu-latest
     needs: build
     steps:
