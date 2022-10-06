@@ -53,7 +53,7 @@ jobs:
           echo "Update image... ${IMAGE}"
           export PATCH='{"spec":{"workload":{"spec":{"containers":\ [{"name":"uni-orders", "image":"${IMAGE}"}]}}}}'
           echo "patch = ${PATCH}"
-          kubectl --kubeconfig ~/.napptive/default/napptive-kubeconfig patch component uni-orders --patch "${PATCH}" --type=merge
+          kubectl --kubeconfig ~/.napptive/default/napptive-kubeconfig patch deploy uni-orders --patch '{"spec":{"template":{"spec":{"containers":[{"image":"jefftian/uni-orders","name":"uni-orders"}]}}}}' --type=merge
 
   deploy-okteto:
     runs-on: ubuntu-latest
