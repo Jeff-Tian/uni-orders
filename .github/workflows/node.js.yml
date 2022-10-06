@@ -42,13 +42,18 @@ jobs:
       - run: playground login --pat
       - run: playground get-kubeconfig
       - run: ls ~/.napptive/default/napptive-kubeconfig
-      - run: export PATH=$PATH:$(pwd)
-      - run: echo "Forcing rolling update to download newest image"
-      - run: export IMAGE="jefftian/uni-orders:latest"
-      - run: echo "Update image... ${IMAGE}"
-      - run: export PATCH='{"spec":{"workload":{"spec":{"containers":\ [{"name":"uni-orders", "image":"${IMAGE}"}]}}}}'
-      - run: echo "patch = ${PATCH}"
-      - run: 'kubectl --kubeconfig ~/.napptive/default/napptive-kubeconfig patch component uni-orders --patch "${PATCH}" --type=merge'
+
+      - name: update
+        env:
+          PLAYGROUND_PAT: ${{ secrets.PLAYGROUND_PAT }}
+        run |
+          export PATH=$PATH:$(pwd)
+          echo "Forcing rolling update to download newest image"
+          export IMAGE="jefftian/uni-orders:latest"
+          echo "Update image... ${IMAGE}"
+          export PATCH='{"spec":{"workload":{"spec":{"containers":\ [{"name":"uni-orders", "image":"${IMAGE}"}]}}}}'
+          echo "patch = ${PATCH}"
+          kubectl --kubeconfig ~/.napptive/default/napptive-kubeconfig patch component uni-orders --patch "${PATCH}" --type=merge
 
   deploy-okteto:
     runs-on: ubuntu-latest
