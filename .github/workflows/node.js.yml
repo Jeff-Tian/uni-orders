@@ -26,6 +26,8 @@ jobs:
     name: update napptive
     needs: build
     runs-on: ubuntu-latest
+    env:
+      PLAYGROUND_PAT: ${{ secrets.PLAYGROUND_PAT }}
     steps:
       - uses: actions/checkout@v2
       - run: echo "Downloading NAPPTIVE Playground CLI"
@@ -39,8 +41,8 @@ jobs:
       - run: echo "Forcing rolling update to download newest image"
       - run: IMAGE="jefftian/uni-orders:latest"
       - run: echo "Update image... ${IMAGE}"
-      - run: 'PATCH="{\"spec\":{\"workload\":{\"spec\":{\"containers\": [{\"name\":\"cd-example\", \"image\":\"${IMAGE}\"}]}}}}"'
-      - run: 'kubectl --kubeconfig napptive-kubeconfig patch component cd-example -p "${PATCH}" --type=merge'
+      - run: 'PATCH="{\"spec\":{\"workload\":{\"spec\":{\"containers\": [{\"name\":\"uni-orders\", \"image\":\"${IMAGE}\"}]}}}}"'
+      - run: 'kubectl --kubeconfig napptive-kubeconfig patch component uni-orders -p "${PATCH}" --type=merge'
 
   deploy-okteto:
     runs-on: ubuntu-latest
