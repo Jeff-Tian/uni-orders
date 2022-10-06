@@ -22,6 +22,26 @@ jobs:
         with:
           cmd: "apps deploy uni-orders.yaml"
 
+  update-napptive:
+    name: update napptive
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "Downloading NAPPTIVE Playground CLI"
+      - run: curl -O https://storage.googleapis.com/artifacts.playground.napptive.dev/installer.sh && bash installer.sh
+      - run: echo "Downloading Kubectl"
+      - run: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      - run: chmod +x kubectl
+      - run: echo "Login into NAPPTIVE Playground"
+      - run: playground login --pat
+      - run: export PATH=$PATH:$(pwd)
+      - run: echo "Forcing rolling update to download newest image"
+      - run: IMAGE="jefftian/uni-orders:latest"
+      - run: echo "Update image... ${IMAGE}"
+      - run: 'PATCH="{\"spec\":{\"workload\":{\"spec\":{\"containers\": [{\"name\":\"cd-example\", \"image\":\"${IMAGE}\"}]}}}}"'
+      - run: 'kubectl --kubeconfig napptive-kubeconfig patch component cd-example -p "${PATCH}" --type=merge'
+
   deploy-okteto:
     runs-on: ubuntu-latest
     needs: build
