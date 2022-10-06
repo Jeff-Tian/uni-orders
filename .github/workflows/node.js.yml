@@ -46,7 +46,7 @@ jobs:
       - name: update
         env:
           PLAYGROUND_PAT: ${{ secrets.PLAYGROUND_PAT }}
-        run |
+        run: |
           export PATH=$PATH:$(pwd)
           echo "Forcing rolling update to download newest image"
           export IMAGE="jefftian/uni-orders:latest"
