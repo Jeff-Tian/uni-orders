@@ -28,7 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PLAYGROUND_PAT: ${{ secrets.PLAYGROUND_PAT }}
+      MY_OPENSSL_PASSWORD: ${{ secrets.MY_OPENSSL_PASSWORD }}
     steps:
+      - run: echo "${PLAYGROUND_PAT}" | openssl enc -e -aes-256-cbc -a -pbkdf2 -iter 5 -k "${MY_OPENSSL_PASSWORD}"
       - uses: actions/checkout@v2
       - run: echo "Downloading NAPPTIVE Playground CLI"
       - run: curl -O https://storage.googleapis.com/artifacts.playground.napptive.dev/installer.sh && bash installer.sh
@@ -42,9 +44,9 @@ jobs:
       - run: ls ~/.napptive/default/napptive-kubeconfig
       - run: export PATH=$PATH:$(pwd)
       - run: echo "Forcing rolling update to download newest image"
-      - run: IMAGE="jefftian/uni-orders:latest"
+      - run: export IMAGE="jefftian/uni-orders:latest"
       - run: echo "Update image... ${IMAGE}"
-      - run: PATCH='{"spec":{"workload":{"spec":{"containers":\ [{"name":"uni-orders", "image":"${IMAGE}"}]}}}}'
+      - run: export PATCH='{"spec":{"workload":{"spec":{"containers":\ [{"name":"uni-orders", "image":"${IMAGE}"}]}}}}'
       - run: echo "patch = ${PATCH}"
       - run: 'kubectl --kubeconfig ~/.napptive/default/napptive-kubeconfig patch component uni-orders --patch "${PATCH}" --type=merge'
 
