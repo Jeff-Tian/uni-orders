@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthController } from './health.controller';
-import { DNSHealthIndicator, HealthCheckService } from '@nestjs/terminus';
+import { HealthCheckService, HttpHealthIndicator } from '@nestjs/terminus';
 import { HealthCheckExecutor } from '@nestjs/terminus/dist/health-check/health-check-executor.service';
 import { HttpModule } from '@nestjs/common';
 
@@ -13,7 +13,7 @@ describe('HealthController', () => {
       controllers: [HealthController],
       providers: [
         { provide: 'AXIOS_INSTANCE_TOKEN', useValue: 'AXIOS_INSTANCE_TOKEN' },
-        DNSHealthIndicator,
+        HttpHealthIndicator,
         HealthCheckExecutor,
         HealthCheckService,
       ],
