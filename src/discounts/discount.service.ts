@@ -1,9 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { IDiscountsStorage } from './IDiscountsStorage';
+import { symbols } from '../constants';
 
 @Injectable()
 export class DiscountService {
-  constructor(private readonly discountsStorage: IDiscountsStorage) {}
+  constructor(
+    @Inject(symbols.IDiscountStorage)
+    private readonly discountsStorage: IDiscountsStorage,
+  ) {}
 
   async getDiscount() {
     const discount = await this.discountsStorage.pop();
