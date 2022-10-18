@@ -28,4 +28,31 @@ describe('discount service', () => {
       newDiscountService.getDiscount.bind(newDiscountService),
     ).rejects.toThrowError('No Available Discount for Now!');
   });
+
+  it('recovers after a certain amount of time', async () => {
+    const inmemoryDiscountsStorage = new InmemoryDiscountsStorage();
+    await inmemoryDiscountsStorage.reset();
+    const newDiscountService = new DiscountService(inmemoryDiscountsStorage);
+
+    const oneHundredArray = new Array(100).fill(0);
+    await Promise.all(
+      oneHundredArray.map(
+        newDiscountService.getDiscount.bind(newDiscountService),
+      ),
+    );
+
+    await expect(
+      newDiscountService.getDiscount.bind(newDiscountService)(),
+    ).rejects.toThrowError('No Available Discount for Now!');
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    await expect(
+      newDiscountService.getDiscount.bind(newDiscountService)(),
+    ).resolves.toBeLessThan(100);
+
+    await expect(
+      newDiscountService.getDiscount.bind(newDiscountService)(),
+    ).resolves.toBeGreaterThanOrEqual(0);
+  });
 });

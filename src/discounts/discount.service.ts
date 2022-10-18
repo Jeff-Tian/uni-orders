@@ -6,12 +6,12 @@ export class DiscountService {
   constructor(private readonly discountsStorage: IDiscountsStorage) {}
 
   async getDiscount() {
-    const discount = this.discountsStorage.pop();
+    const discount = await this.discountsStorage.pop();
 
     if (discount === undefined) {
       throw new Error('No Available Discount for Now!');
     }
 
-    return discount;
+    return Promise.resolve(discount);
   }
 }

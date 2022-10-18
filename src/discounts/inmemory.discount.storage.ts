@@ -23,7 +23,11 @@ export class InmemoryDiscountsStorage implements IDiscountsStorage {
     }
 
     pop(): Promise<number> {
-        return availableDiscounts.pop()
+        const discount =  availableDiscounts.pop()
+
+        setTimeout(()=>availableDiscounts.unshift(discount), 1000)
+
+        return discount
     }
 
     reset(): Promise<void> {
