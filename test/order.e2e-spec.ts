@@ -6,7 +6,7 @@ import { AppModule } from './../src/app.module';
 describe('OrderController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -15,11 +15,28 @@ describe('OrderController (e2e)', () => {
     await app.init();
   });
 
-  it.skip('patches an order', () => {
+  afterAll(async () => {
+    await app.close();
+  });
+
+  let order;
+
+  it('creates an order', () => {
+    return request(app.getHttpServer())
+      .post('/orders')
+      .send({ cents: 11, remark: 'test' })
+      .expect(201)
+      .expect((res) => {
+        expect(res.body).toMatchObject({});
+        order = res.body;
+      });
+  });
+
+  it('patches an order', () => {
     return request(app.getHttpServer())
       .patch('/orders')
       .send({
-        id: 4,
+        id: order.id,
         number: '2020-12-29-41899524',
         cents: 100,
         randomDiscountCents: 22,
@@ -33,17 +50,18 @@ describe('OrderController (e2e)', () => {
       })
       .expect(200)
       .expect({
-        id: 4,
-        number: '2020-12-29-41899524',
-        cents: 100,
-        randomDiscountCents: 22,
-        status: '3',
-        created_at: '2020-12-29T11:38:19.524Z',
+        id: order.id,
+        number: order.number,
+        cents: order.cents,
+        randomDiscountCents: order.randomDiscountCents,
+        status: 3,
+        created_at: order.created_at,
         paid_at: null,
         cancelled_at: null,
         timeout_at: null,
-        remark: '创世订单',
-        index: 0,
+        remark: order.remark,
+        paymentMethod: null,
+        type: null,
       });
   });
 });

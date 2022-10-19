@@ -56,7 +56,7 @@ describe('OrdersController', () => {
 
     beforeAll(() => {
       mockRepo.create.mockImplementation(identity);
-      mockRepo.save.mockImplementation(identity);
+      mockRepo.save.mockImplementation(async (x) => identity(x));
       mockRepo.findOneOrFail.mockImplementation(() => mockOrder);
     });
 
