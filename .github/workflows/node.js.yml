@@ -35,7 +35,8 @@ jobs:
 
   update-napptive:
     name: update napptive
-    needs: deploy-secrets-to-napptive
+    if: {{always()}}
+    needs: deploy-napptive
     runs-on: ubuntu-latest
     env:
       PLAYGROUND_PAT: ${{ secrets.PLAYGROUND_PAT }}
