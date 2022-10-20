@@ -35,7 +35,7 @@ jobs:
 
   update-napptive:
     name: update napptive
-    if: {{always()}}
+    if: ${{ always() }}
     needs: deploy-napptive
     runs-on: ubuntu-latest
     env:
