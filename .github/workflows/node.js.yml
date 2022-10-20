@@ -10,9 +10,20 @@ on:
     branches: [ "main" ]
 
 jobs:
+  deploy-secrets-to-napptive:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl --location --request POST 'https://api.github.com/repos/Jeff-Tian/uni-orders-secrets/dispatches' \
+          --header 'Authorization: Bearer ${{ secrets.PERSONAL_ACCESS_TOKEN }}' \
+          --header 'Accept: application/vnd.github+json' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{"event_type": "webhook"}'
+
   deploy-napptive:
     name: Deploy to napptive
-    needs: build
+    needs: deploy-secrets-to-napptive
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
