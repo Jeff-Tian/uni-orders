@@ -28,7 +28,7 @@ spec:
         deployedBy: deploy-node-app
     spec:
       containers:
-        - image: jefftian/uni-orders:latest
+        - image: jefftian/uni-orders
           imagePullPolicy: Always
           name: uni-orders
           env:
