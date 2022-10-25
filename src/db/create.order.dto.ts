@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {OrderStatus} from "./entities/orderStatus";
+import { OrderStatus } from './entities/orderStatus';
 
 export class CreateOrderDto {
   @ApiProperty()

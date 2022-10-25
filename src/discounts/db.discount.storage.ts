@@ -48,13 +48,18 @@ export class DbDiscountsStorage implements IDiscountsStorage {
 
     setTimeout(() => this.discountRepo.save(res), 1000);
 
+    await this.discountRepo.delete(res.id);
+
     return res.value;
   }
 
   async reset(): Promise<void> {
     await Promise.all(
       initialDiscounts.map((value) => {
-        console.log('this.discountRepo.save = ', this.discountRepo.save.toString());
+        console.log(
+          'this.discountRepo.save = ',
+          this.discountRepo.save.toString(),
+        );
         const promise = this.discountRepo.save({ value });
         console.log('file = ', __filename, 'promise = ', promise);
         return promise.catch(ignoreDuplicationError);
