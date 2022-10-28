@@ -5,5 +5,6 @@ export const mockRepo = {
   }),
   findOneOrFail: jest.fn(),
   findOne: jest.fn().mockResolvedValue({ value: 1 }),
-  delete: jest.fn()
+  delete: jest.fn(),
+  find: jest.fn(),
 };

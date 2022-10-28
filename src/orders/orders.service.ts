@@ -46,7 +46,7 @@ export class OrdersService implements IOrdersService {
   }
 
   async findAll(): Promise<Order[]> {
-    return this.orderRepo.find();
+    return this.orderRepo.find({ order: { created_at: 'DESC' } });
   }
 
   async getById(orderId: number): Promise<Order> {
