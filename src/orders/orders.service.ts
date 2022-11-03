@@ -67,7 +67,7 @@ export class OrdersService implements IOrdersService {
       order.status !== OrderStatus.Paid
     ) {
       this.logger.log(`查询支付记录 ${JSON.stringify(order)}`);
-      this.paymentService.findAndUpdatePaymentsFor(order).then((res) => {
+      await this.paymentService.findAndUpdatePaymentsFor(order).then((res) => {
         this.logger.log(`支付记录异步更新结果： ${util.inspect(res)}`);
       });
     }
