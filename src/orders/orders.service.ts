@@ -1,7 +1,7 @@
 import { HttpException, Inject, Injectable, Logger } from '@nestjs/common';
 import { IOrdersService } from './IOrdersService';
 import { symbols } from '../constants';
-import { Repository } from 'typeorm';
+import { IsNull, MoreThan, Not, Repository } from 'typeorm';
 import { Order } from '../db/entities/orders.entity';
 import * as util from 'util';
 import { CreateOrderDto } from 'src/db/create.order.dto';
@@ -46,7 +46,15 @@ export class OrdersService implements IOrdersService {
   }
 
   async findAll(): Promise<Order[]> {
-    return this.orderRepo.find({ order: { created_at: 'DESC' } });
+    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+
+    return this.orderRepo.find({
+      order: { created_at: 'DESC' },
+      where: [
+        { paid_at: Not(IsNull()) },
+        { created_at: MoreThan(tenMinutesAgo) },
+      ],
+    });
   }
 
   async getById(orderId: number): Promise<Order> {
