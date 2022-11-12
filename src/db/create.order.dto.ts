@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { OrderStatus } from './entities/orderStatus';
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int} from '@nestjs/graphql';
 
-@ObjectType()
+@InputType()
 export class CreateOrderDto {
   @ApiProperty()
   @Field((type) => Int)

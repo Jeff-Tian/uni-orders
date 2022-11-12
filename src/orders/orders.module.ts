@@ -24,7 +24,7 @@ import { OrdersResolver } from './orders.resolver';
     PaymentService,
     { provide: symbols.IOrdersService, useClass: OrdersService },
     { provide: symbols.IDiscountStorage, useClass: DbDiscountsStorage },
-      OrdersResolver,
+    OrdersResolver,
   ],
 })
 export class OrdersModule {}
