@@ -13,3 +13,15 @@
 - [Free Arch：个人收款发货自动化之随机优惠方案（Hard Money） - Jeff Tian的文章 - 知乎](https://zhuanlan.zhihu.com/p/569483206)
 - [Free Arch: 给个人订单系统增加一张支付实体表 - Jeff Tian的文章 - 知乎](https://zhuanlan.zhihu.com/p/569799753)
 - [Free Arch: 使用 OAM 摆脱厂商锁定 - Jeff Tian的文章 - 知乎](https://zhuanlan.zhihu.com/p/571009896)
+
+## 本地运行
+
+```shell
+yarn && yarn start:dev
+
+# rest apis
+open http://localhost:3000/api
+
+# graphiql
+open http://localhost:3000/graphiql
+```

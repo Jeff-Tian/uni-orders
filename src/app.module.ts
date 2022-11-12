@@ -9,6 +9,8 @@ import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { ConfigModule } from '@nestjs/config';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
+import { MercuriusDriver, MercuriusDriverConfig } from '@nestjs/mercurius';
+import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
   imports: [
@@ -20,6 +22,11 @@ import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
     OrdersModule,
     TerminusModule,
     ShoppingCartModule,
+    GraphQLModule.forRoot<MercuriusDriverConfig>({
+      driver: MercuriusDriver,
+      autoSchemaFile: true,
+      graphiql: true,
+    }),
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],

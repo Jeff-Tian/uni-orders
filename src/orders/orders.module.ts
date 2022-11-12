@@ -10,6 +10,7 @@ import { HttpModule } from '@nestjs/axios';
 import { DiscountService } from '../discounts/discount.service';
 import { discountProviders } from '../db/discount.providers';
 import { DbDiscountsStorage } from '../discounts/db.discount.storage';
+import { OrdersResolver } from './orders.resolver';
 
 @Module({
   imports: [DatabaseModule, HttpModule],
@@ -23,6 +24,7 @@ import { DbDiscountsStorage } from '../discounts/db.discount.storage';
     PaymentService,
     { provide: symbols.IOrdersService, useClass: OrdersService },
     { provide: symbols.IDiscountStorage, useClass: DbDiscountsStorage },
+      OrdersResolver,
   ],
 })
 export class OrdersModule {}
