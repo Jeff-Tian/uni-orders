@@ -33,7 +33,7 @@ async function bootstrap() {
     extendedGrpcOptions(grpcClientOptions as GrpcOptions),
   );
 
-  await app.startAllMicroservicesAsync();
+  await app.startAllMicroservices();
 
   app.enableShutdownHooks();
 

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthController } from './health.controller';
-import { HealthCheckService, HttpHealthIndicator } from '@nestjs/terminus';
+import {HealthCheckService, HttpHealthIndicator, TerminusModule} from '@nestjs/terminus';
 import { HealthCheckExecutor } from '@nestjs/terminus/dist/health-check/health-check-executor.service';
 import { HttpModule } from '@nestjs/common';
 
@@ -9,7 +9,7 @@ describe('HealthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule],
+      imports: [HttpModule, TerminusModule],
       controllers: [HealthController],
       providers: [
         { provide: 'AXIOS_INSTANCE_TOKEN', useValue: 'AXIOS_INSTANCE_TOKEN' },

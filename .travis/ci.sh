@@ -1,4 +1,4 @@
-npm run build
+yarn build
 docker build -t jefftian/uni-orders .
 docker images
 docker run --network host -e CI=true -d -p 127.0.0.1:3000:3000 --name uni-orders jefftian/uni-orders

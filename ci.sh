@@ -1,15 +1,15 @@
 nvm use 12.16.2
 
-npm test
+yarn test
 
-npm run start:dev-env
+yarn start:dev-env
 echo "dev env started..."
 echo "starting e2e tests..."
-npm run test:e2e
+yarn test:e2e
 echo "e2e tests done"
 
 sh .travis/ci.sh
 
 echo "stopping dev env..."
-npm run stop:dev-env
+yarn stop:dev-env
 echo "dev env stopped."
