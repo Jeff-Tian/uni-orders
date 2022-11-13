@@ -9,7 +9,10 @@ import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './health/health.controller';
 import { ConfigModule } from '@nestjs/config';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
-import { MercuriusDriver, MercuriusDriverConfig } from '@nestjs/mercurius';
+import {
+  MercuriusFederationDriver,
+  MercuriusFederationDriverConfig,
+} from '@nestjs/mercurius';
 import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
@@ -22,10 +25,11 @@ import { GraphQLModule } from '@nestjs/graphql';
     OrdersModule,
     TerminusModule,
     ShoppingCartModule,
-    GraphQLModule.forRoot<MercuriusDriverConfig>({
-      driver: MercuriusDriver,
+    GraphQLModule.forRoot<MercuriusFederationDriverConfig>({
+      driver: MercuriusFederationDriver,
       autoSchemaFile: true,
       graphiql: true,
+      federationMetadata: true,
     }),
   ],
   controllers: [AppController, HealthController],

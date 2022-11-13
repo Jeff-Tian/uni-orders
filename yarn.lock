@@ -58,6 +58,27 @@
     ora "5.4.1"
     rxjs "6.6.7"
 
+"@apollo/cache-control-types@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@apollo/cache-control-types/-/cache-control-types-1.0.2.tgz#f42ed3563acc7f1f50617d65d208483977adc68e"
+  integrity sha512-Por80co1eUm4ATsvjCOoS/tIR8PHxqVjsA6z76I6Vw0rFn4cgyVElQcmQDIZiYsy41k8e5xkrMRECkM2WR8pNw==
+
+"@apollo/federation-internals@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@apollo/federation-internals/-/federation-internals-2.1.4.tgz#aa475c51fbc91d9e37e9a6e69446412ab8e32b88"
+  integrity sha512-Fpln5hHEh0Jjy0vaTpIlv1SF+zg2cjunsH2X5QDHwKOXoHsT4o7LF+Duoy7LgZj6W3HNW9Z/srmuOXXNTl2gjw==
+  dependencies:
+    chalk "^4.1.0"
+    js-levenshtein "^1.1.6"
+
+"@apollo/subgraph@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@apollo/subgraph/-/subgraph-2.1.4.tgz#a8e0c0eb0e2d6a7f8869dfecf8e0d07ed5236712"
+  integrity sha512-WrZuvCtTjLczkJq9BxyGgGB5lE0vr83ZFvbdVdByve+EbvfCh0rNtXNFaAXOkOcqzMcDv258AN44o7WBm+raYw==
+  dependencies:
+    "@apollo/cache-control-types" "^1.0.2"
+    "@apollo/federation-internals" "^2.1.4"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.16.7":
   version "7.18.6"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.18.6.tgz"
@@ -931,7 +952,7 @@
     path-to-regexp "3.2.0"
     swagger-ui-dist "4.15.1"
 
-"@nestjs/terminus@8.4.7":
+"@nestjs/terminus@8.1.1":
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/@nestjs/terminus/-/terminus-8.1.1.tgz#21a7c1a543224ebfef00d161efdf22e390376301"
   integrity sha512-C+Pm1LZse8ZSfXeZXMTmUIGAmDpov1WRury/cyWj50ceCCCWz7csACNouGBEvjDmBklzfbkxgDH9mOSbm1r54A==
@@ -4816,6 +4837,11 @@ jest@^26.6.3:
     "@jest/core" "^26.6.3"
     import-local "^3.0.2"
     jest-cli "^26.6.3"
+
+js-levenshtein@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/js-levenshtein/-/js-levenshtein-1.1.6.tgz#c6cee58eb3550372df8deb85fad5ce66ce01d59d"
+  integrity sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==
 
 js-tokens@^4.0.0:
   version "4.0.0"
