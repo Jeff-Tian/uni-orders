@@ -8,7 +8,7 @@ on: [push, pull_request]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  rover-build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -34,12 +34,12 @@ jobs:
           # https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
       # only run this command with the `--background` flag if you have the Apollo Studio GitHub integration enabled on your repository
-      - name: Run check against prod
-        run: |
-          rover graph check my-graph@prod --schema ./test.graphql --background
+#      - name: Run check against prod
+#        run: |
+#          rover graph check my-graph@prod --schema ./test.graphql --background
 
       - name: introspect and publish graph
         run: |
           rover graph introspect \
-            https://uni-orders-jeff-tian.cloud.okteto.net/graphiql | \
+            https://uni-orders-jeff-tian.cloud.okteto.net/graphql | \
             rover graph publish uni-orders@current --schema -
