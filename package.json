@@ -42,7 +42,7 @@
     "@nestjs/terminus": "8.1.1",
     "fastify": "^4.9.2",
     "fastify-swagger": "^5.2.0",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "grpc": "^1.24.11",
     "grpc-health": "^1.6.0",
     "grpc-man": "^1.6.10",
