@@ -71,6 +71,7 @@ jobs:
           kubectl --kubeconfig ~/.napptive/default/napptive-kubeconfig patch deploy uni-orders --patch '{"spec":{"template":{"spec":{"containers":[{"image":"jefftian/uni-orders","name":"uni-orders"}]}}}}' --type=merge
 
   deploy-okteto:
+    if: {{false}} # disable okteto deployment as my okteto env was deleted
     runs-on: ubuntu-latest
     needs: build
     steps:
