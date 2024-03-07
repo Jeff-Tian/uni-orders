@@ -48,7 +48,7 @@
     "grpc-man": "^1.6.10",
     "halson": "^3.0.0",
     "logrocket": "^1.0.14",
-    "mercurius": "^11.3.0",
+    "mercurius": "^13.4.0",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
